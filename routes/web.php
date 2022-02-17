@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,3 +28,6 @@ use Illuminate\Support\Facades\Route;
 // Route::post('/posts',[PostController::class,"store"]);
 
 route::resource('posts',PostController::class);
+// route::resource('users',PostController::class);
+route::get("/users/create",[UserController::class,"create"]);
+route::post("/users",[UserController::class,"store"]);
