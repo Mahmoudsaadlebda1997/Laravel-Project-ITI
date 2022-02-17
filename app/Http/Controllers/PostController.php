@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use Illuminate\Support\Facades\Redirect;
 use PhpParser\Node\Stmt\Return_;
 
 class PostController extends Controller
@@ -44,8 +45,7 @@ class PostController extends Controller
             "title"=>$request->title,
             "description"=>$request->description
         ]);
-        $posts=Post::all();
-        return view("posts.index",["posts"=>$posts]);
+        return redirect()->route("posts.index");
     }
 
     /**
@@ -87,10 +87,13 @@ class PostController extends Controller
         $post->title=$request->title;
         $post->description=$request->description;
         $post->save();
-        $posts=Post::all();
+        // $posts=Post::all();
         // return view("posts.index",["posts"=>$posts]);
         // Second Method To Show slove Undefined Variable of $posts
-        return view ("posts.index", compact("posts"));
+        // return view ("posts.index", compact("posts"));
+        // Best Way to Go Other Page without Reapting Code
+        return redirect()->route("posts.index");
+
 
     }
 
@@ -104,7 +107,10 @@ class PostController extends Controller
     {
         $post=Post::find($id);
         $post->delete();
-        $posts=Post::all();
-        return view("posts.index",["posts"=>$posts]);
+        // $posts=Post::all();
+        // return view("posts.index",["posts"=>$posts]);
+        // Best Way to Go Other Page without Reapting Code
+        return redirect()->route("posts.index");
+        
     }
 }
