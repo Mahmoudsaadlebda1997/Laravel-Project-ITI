@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\PostController;
-use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,20 +13,15 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-// Route::get('/posts',[PostController::class,"index"])->name('posts');
-// Route::get('/posts/create',[PostController::class,"create"]);
-// Route::post('/posts/{id}',[PostController::class,"update"]);
 
+Route::get('/', function () {
+    return view('welcome');
+});
 
+Route::get('/dashboard', function () {
+    return redirect()->route("posts.index");
+})->middleware(['auth'])->name('dashboard');
 
-// Route::post('/posts/{id}',[PostController::class,"delete"]);
+require __DIR__.'/auth.php';
 
-// Route::get('/posts/{id}',[PostController::class,"show"])->where('id', '[0-9]+')->name('posts.show');
-
-// Route::get('/posts/{id}/edit',[PostController::class,"edit"])->where('id', '[0-9]+')->name('posts.edit');
-// Route::post('/posts',[PostController::class,"store"]);
-
-route::resource('posts',PostController::class);
-// route::resource('users',PostController::class);
-route::get("/users/create",[UserController::class,"create"]);
-route::post("/users",[UserController::class,"store"]);
+Route::resource("posts",PostController::class)->middleware('auth');

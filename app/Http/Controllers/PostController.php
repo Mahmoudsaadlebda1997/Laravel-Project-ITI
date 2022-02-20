@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePostRequest;
-use Illuminate\Http\Request;
 use App\Models\Post;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use PhpParser\Node\Stmt\Return_;
+use Illuminate\Support\Facades\Auth;
+
 
 class PostController extends Controller
 {
@@ -19,8 +21,9 @@ class PostController extends Controller
     {
         //Select* From posts
         // return view
-        
-        $posts=Post::all();
+        // To Show Max 5 posts in the page
+        $posts=Post::paginate(5);
+        // $posts=Post::all();
         return view("posts.index",["posts"=>$posts]);
     }
 
@@ -49,7 +52,7 @@ class PostController extends Controller
         $post=new Post();
         $post->title=$request->title;
         $post->description=$request->description;
-        $post->user_id=2;
+        $post->user_id=Auth::id();
         $post->save();
 
         return redirect()->route("posts.index");
