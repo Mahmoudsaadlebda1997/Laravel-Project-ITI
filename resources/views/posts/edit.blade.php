@@ -3,7 +3,7 @@
             <form action="/posts/{{$id}}" method="post">
                     <!-- To Save My Values i use CSRF -->
                 @csrf
-                @method("PATCH")
+                @method("put")
                 <div class="mb-3">
                     <label for="exampleInputID" class="form-label">ID</label>
                     <input type="number" value="{{$id}}" class="form-control" id="exampleInputID">
